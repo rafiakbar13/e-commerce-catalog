@@ -1,5 +1,12 @@
 <template>
-  <div class="container" :class="containerClass">
+  <div
+    class="container"
+    :class="{
+      'container-men': isMenCategory,
+      'container-women': isWomenCategory,
+      'container-unavailable': isUnavailableCategory,
+    }"
+  >
     <div class="wrapper">
       <div v-if="isLoading" class="loader"></div>
       <div v-else>
@@ -78,9 +85,6 @@
             </div>
           </div>
         </div>
-        <div v-else>
-          <p>empty</p>
-        </div>
       </div>
     </div>
   </div>
@@ -118,13 +122,6 @@ export default {
         !this.categoriesToSave.includes(this.currentProduct.category)
       );
     },
-    containerClass() {
-      return {
-        "container-men": this.isMenCategory,
-        "container-women": this.isWomenCategory,
-        "container-unavailable": this.isUnavailableCategory,
-      };
-    },
   },
   methods: {
     async getNextProduct() {
@@ -158,6 +155,7 @@ export default {
             ? "#720060"
             : "gray";
         } else {
+          // this.currentIndex++;
           this.getNextProduct();
         }
 
@@ -169,7 +167,6 @@ export default {
     },
   },
   mounted() {
-    // Panggil metode getNextProduct saat komponen dimuat pertama kali
     this.getNextProduct();
   },
 };
